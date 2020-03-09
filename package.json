@@ -1,10 +1,13 @@
 {
   "name": "apollo-link-mutation-queue",
   "version": "0.0.1",
-  "description": "An apollo link that queues mutations.",
-  "main": "src/index.js",
+  "description": "An apollo link that queues mutations",
+  "main": "build/dist/index.js",
+  "module": "build/dist/index.js",
+  "typings": "build/dist/index.d.ts",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "tsc",
+    "prepare": "yarn build"
   },
   "keywords": [
     "apollo",
@@ -12,9 +15,14 @@
     "mutation",
     "queue"
   ],
-  "author": "Stephen Rugh",
+  "author": "Stephen Rugh <rugh@adobe.com>",
   "license": "ISC",
   "dependencies": {
     "apollo-link": "~1.2.13"
+  },
+  "devDependencies": {
+    "@types/graphql": "^14.5.0",
+    "@types/node": "^13.9.0",
+    "typescript": "^3.8.3"
   }
 }

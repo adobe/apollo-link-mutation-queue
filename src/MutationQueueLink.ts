@@ -1,6 +1,20 @@
-import { ApolloLink, Observable } from "apollo-link";
+import {
+  ApolloLink,
+  Observable,
+  Operation,
+  FetchResult,
+  NextLink
+} from "apollo-link";
+import { Observer } from "zen-observable-ts";
 
-const toRequestKey = operation => {
+interface OperationQueueEntry {
+  operation: Operation;
+  forward: NextLink;
+  observer: Observer<FetchResult>;
+  subscription?: { unsubscribe: () => void };
+}
+
+const toRequestKey = (operation: Operation) => {
   return operation.operationName;
 };
 
@@ -10,23 +24,25 @@ const toRequestKey = operation => {
  * To skip the queue pass `{ context: { skipQueue: true } }` to your mutation.
  */
 export default class MutationQueueLink extends ApolloLink {
+  private opQueue: OperationQueueEntry[] = [];
+  private inProcess: Boolean = false;
+  private debug: Boolean = false;
+
   /**
-   * @param {Boolean} props.debug - set to true to enable logging
+   * @param {Boolean} debug - set to true to enable logging
    */
-  constructor({ debug = true } = {}) {
+  constructor({ debug = false } = {}) {
     super();
-    this.opQueue = [];
-    this.inProcess = false;
     this.debug = debug;
   }
 
-  log(message, ...rest) {
+  private log(message: String, ...rest: String[]) {
     if (this.debug) {
       console.log(message, ...rest);
     }
   }
 
-  processOperation(entry) {
+  private processOperation(entry: OperationQueueEntry) {
     const { operation, forward, observer } = entry;
     this.inProcess = true;
     this.log("[PROCESSING] -", toRequestKey(operation));
@@ -53,7 +69,16 @@ export default class MutationQueueLink extends ApolloLink {
     });
   }
 
-  request(operation, forward) {
+  private cancelOperation(entry: OperationQueueEntry) {
+    this.opQueue = this.opQueue.filter(e => e !== entry);
+  }
+
+  private enqueue(entry: OperationQueueEntry) {
+    this.log("[ENQUEUE] -", toRequestKey(entry.operation));
+    this.opQueue.push(entry);
+  }
+
+  public request(operation: Operation, forward: NextLink) {
     // Enqueue all mutations unless manually skipped.
     if (
       operation.toKey().includes('"operation":"mutation"') &&
@@ -64,21 +89,12 @@ export default class MutationQueueLink extends ApolloLink {
         if (!this.inProcess) {
           this.processOperation(operationEntry);
         } else {
-          this.log("[ENQUEUE] -", toRequestKey(operation));
-          this.opQueue.push(operationEntry);
+          this.enqueue(operationEntry);
         }
         return () => this.cancelOperation(operationEntry);
       });
     } else {
       return forward(operation);
     }
-  }
-
-  cancelOperation(entry) {
-    this.opQueue = this.opQueue.filter(e => e !== entry);
-  }
-
-  enqueue(entry) {
-    this.opQueue.push(entry);
   }
 }
