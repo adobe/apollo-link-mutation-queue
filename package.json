@@ -13,5 +13,8 @@
     "queue"
   ],
   "author": "Stephen Rugh",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "apollo-link": "~1.2.13"
+  }
 }
