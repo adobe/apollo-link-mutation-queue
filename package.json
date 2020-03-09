@@ -1,0 +1,17 @@
+{
+  "name": "apollo-link-mutation-queue",
+  "version": "0.0.1",
+  "description": "An apollo link that queues mutations.",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "apollo",
+    "link",
+    "mutation",
+    "queue"
+  ],
+  "author": "Stephen Rugh",
+  "license": "ISC"
+}
