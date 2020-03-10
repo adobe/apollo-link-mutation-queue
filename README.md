@@ -2,13 +2,13 @@
 
 An Apollo link that enqueues mutations so that they do not fire in parallel.
 
-## Why
+## Goals
 
 I was finding that mutations affecting the same underlying data would often
 return incorrect data if fired in parallel. Instead of blocking UI based on the
 loading state of the mutations I wrote a link that just enqueues mutations.
 
-## Use
+### Usage
 
 Compose your link chain with the link.
 
@@ -43,3 +43,11 @@ useEffect(() => {
   });
 }, []);
 ```
+
+### Contributing
+
+Contributions are welcomed! Read the [Contributing Guide](./.github/CONTRIBUTING.md) for more information.
+
+### Licensing
+
+This project is licensed under the Apache V2 License. See [LICENSE](LICENSE) for more information.
