@@ -2,9 +2,9 @@
   "name": "apollo-link-mutation-queue",
   "version": "0.0.1",
   "description": "An apollo link that queues mutations",
-  "main": "build/dist/index.js",
-  "module": "build/dist/index.js",
-  "typings": "build/dist/index.d.ts",
+  "main": "dist/index.js",
+  "module": "dist/index.js",
+  "typings": "dist/index.d.ts",
   "scripts": {
     "build": "tsc",
     "prepare": "yarn build"
