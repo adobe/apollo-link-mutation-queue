@@ -4,7 +4,7 @@
   "description": "An apollo link that queues mutations",
   "main": "dist/index.js",
   "module": "dist/index.js",
-  "typings": "dist/index.d.ts",
+  "types": "dist/index.d.ts",
   "scripts": {
     "build": "tsc",
     "prepare": "yarn build"
