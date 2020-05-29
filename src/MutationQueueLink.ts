@@ -89,7 +89,7 @@ export default class MutationQueueLink extends ApolloLink {
     this.opQueue.push(entry);
   }
 
-  public request(operation: Operation, forward: NextLink) {
+  public request(operation: Operation, forward: NextLink): Observable<FetchResult> | null {
     // Enqueue all mutations unless manually skipped.
     if (
       operation.toKey().includes('"operation":"mutation"') &&
