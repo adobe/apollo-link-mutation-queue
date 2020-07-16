@@ -14,7 +14,7 @@ import {
   Observable,
   Operation,
   FetchResult,
-  NextLink
+  NextLink,
 } from "apollo-link";
 import { Observer } from "zen-observable-ts";
 
@@ -58,7 +58,7 @@ export default class MutationQueueLink extends ApolloLink {
     this.inProcess = true;
     this.log("[PROCESSING] -", toRequestKey(operation));
     forward(operation).subscribe({
-      next: result => {
+      next: (result) => {
         this.inProcess = false;
         observer.next(result);
         this.log("[NEXT] -", toRequestKey(operation));
@@ -67,7 +67,7 @@ export default class MutationQueueLink extends ApolloLink {
           this.processOperation(this.opQueue.shift());
         }
       },
-      error: error => {
+      error: (error) => {
         this.inProcess = false;
         observer.error(error);
         this.log("[ERROR] -", toRequestKey(operation), error);
@@ -76,12 +76,12 @@ export default class MutationQueueLink extends ApolloLink {
           this.processOperation(this.opQueue.shift());
         }
       },
-      complete: observer.complete.bind(observer)
+      complete: observer.complete.bind(observer),
     });
   }
 
   private cancelOperation(entry: OperationQueueEntry) {
-    this.opQueue = this.opQueue.filter(e => e !== entry);
+    this.opQueue = this.opQueue.filter((e) => e !== entry);
   }
 
   private enqueue(entry: OperationQueueEntry) {
@@ -89,13 +89,13 @@ export default class MutationQueueLink extends ApolloLink {
     this.opQueue.push(entry);
   }
 
-  public request(operation: Operation, forward: NextLink): Observable<FetchResult> | null {
+  public request(
+    operation: Operation,
+    forward: NextLink
+  ): Observable<FetchResult> | null {
     // Enqueue all mutations unless manually skipped.
-    if (
-      operation.toKey().includes('"operation":"mutation"') &&
-      !operation.getContext().skipQueue
-    ) {
-      return new Observable(observer => {
+    if (isMutation(operation) && !operation.getContext().skipQueue) {
+      return new Observable((observer) => {
         const operationEntry = { operation, forward, observer };
         if (!this.inProcess) {
           this.processOperation(operationEntry);
@@ -108,4 +108,12 @@ export default class MutationQueueLink extends ApolloLink {
       return forward(operation);
     }
   }
+}
+
+function isMutation(operation: Operation) {
+  return operation.query.definitions.some(
+    (definition) =>
+      definition.kind === "OperationDefinition" &&
+      definition.operation === "mutation"
+  );
 }
