@@ -16,7 +16,7 @@
     "queue"
   ],
   "author": "Stephen Rugh <rugh@adobe.com>",
-  "license": "ISC",
+  "license": "Apache-2.0",
   "dependencies": {
     "apollo-link": "~1.2.13"
   },
