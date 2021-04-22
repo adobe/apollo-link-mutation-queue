@@ -11,12 +11,11 @@ governing permissions and limitations under the License.
 */
 import {
   ApolloLink,
-  Observable,
   Operation,
   FetchResult,
   NextLink,
-} from "apollo-link";
-import { Observer } from "zen-observable-ts";
+} from "@apollo/client/core";
+import { Observer, Observable } from "zen-observable-ts";
 
 interface OperationQueueEntry {
   operation: Operation;

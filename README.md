@@ -16,7 +16,7 @@ Compose your link chain with the link.
 import MutationQueueLink from "apollo-link-mutation-queue";
 
 const link = ApolloLink.from([
-  new MutationQueueLink()
+  new MutationQueueLink(),
   //... your other links
 ]);
 ```
@@ -27,7 +27,7 @@ Debug with `debug: true`.
 import MutationQueueLink from "apollo-link-mutation-queue";
 
 const link = ApolloLink.from([
-  new MutationQueueLink({ debug: true })
+  new MutationQueueLink({ debug: true }),
   //... your other links
 ]);
 ```
@@ -39,7 +39,7 @@ const [mutate] = useMutation(MY_MUTATION);
 
 useEffect(() => {
   mutate({
-    context: { skipQueue: true }
+    context: { skipQueue: true },
   });
 }, []);
 ```
@@ -51,3 +51,7 @@ Contributions are welcomed! Read the [Contributing Guide](./.github/CONTRIBUTING
 ### Licensing
 
 This project is licensed under the Apache V2 License. See [LICENSE](LICENSE) for more information.
+
+### Note
+
+The upgrade to `@apollo/client` requires react-refresh as a dependency for some reason.
