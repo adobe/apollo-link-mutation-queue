@@ -54,4 +54,4 @@ This project is licensed under the Apache V2 License. See [LICENSE](LICENSE) for
 
 ### Note
 
-The upgrade to `@apollo/client` requires react-refresh as a dependency for some reason.
+The upgrade to `@apollo/client` requires `react` and `react-refresh` as dependencies.
