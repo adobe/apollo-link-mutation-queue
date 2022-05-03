@@ -1,6 +1,6 @@
 {
   "name": "@adobe/apollo-link-mutation-queue",
-  "version": "1.0.2",
+  "version": "1.1.0",
   "description": "An apollo link that queues mutations",
   "main": "dist/index.js",
   "module": "dist/index.js",
