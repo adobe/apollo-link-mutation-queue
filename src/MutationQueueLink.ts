@@ -9,14 +9,8 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-import {
-  ApolloLink,
-  Observable,
-  Operation,
-  FetchResult,
-  NextLink,
-} from "apollo-link";
-import { Observer } from "zen-observable-ts";
+import { ApolloLink, Operation, FetchResult, NextLink } from "@apollo/client";
+import { Observer, Observable } from "zen-observable-ts";
 
 interface OperationQueueEntry {
   operation: Operation;
