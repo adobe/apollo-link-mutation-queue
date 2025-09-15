@@ -29,7 +29,7 @@ jobs:
         run: |
           yarn version --${{ github.event.inputs.level }}
           git push
-      - uses: JS-DevTools/npm-publish@v1
+      - uses: JS-DevTools/npm-publish@v4
         with:
           token: ${{ secrets.ADOBE_BOT_NPM_TOKEN }}
           tag: ${{ github.event.inputs.tag }}
