@@ -18,7 +18,7 @@
   "author": "Stephen Rugh <rugh@adobe.com>",
   "license": "Apache-2.0",
   "dependencies": {
-    "@apollo/client": "^3.0.0",
+    "@apollo/client": "^4.0.0",
     "zen-observable-ts": "^1.0.0"
   },
   "devDependencies": {
